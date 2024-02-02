@@ -1,8 +1,8 @@
 package com.kilomobi.cosmo
 
-data class ProductsScreenState(
+data class DevicesScreenState(
     val devices: List<Device>,
     val isLoading: Boolean,
     val error: String? = null,
-    val lightFiltering: Float
+    val lightFiltering: Float,
 )

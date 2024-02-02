@@ -13,14 +13,14 @@ class ProductsViewModel(
     private val restInterface: CosmoApiService
 ) : ViewModel() {
     private val _state = mutableStateOf(
-        ProductsScreenState(
+        DevicesScreenState(
             devices = emptyList(),
             isLoading = true,
             lightFiltering = 100f
         )
     )
 
-    val state: State<ProductsScreenState>
+    val state: State<DevicesScreenState>
         get() = _state
 
     private val errorHandler = CoroutineExceptionHandler { _, exception ->
@@ -35,7 +35,7 @@ class ProductsViewModel(
         loadDevices()
     }
 
-    private fun loadDevices() {
+    fun loadDevices() {
         viewModelScope.launch(errorHandler) {
             val remoteList = getRemoteDevices()
             _state.value = _state.value.copy(

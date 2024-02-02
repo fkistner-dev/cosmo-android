@@ -62,6 +62,26 @@ dependencies {
     implementation("androidx.compose.material3:material3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+    implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("io.coil-kt:coil:2.5.0")
+    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation("androidx.compose.material:material-icons-core:1.6.0")
+
+    // Navigation Component
+    val nav_version = "2.7.6"
+
+    // Kotlin
+    implementation("androidx.navigation:navigation-fragment-ktx:$nav_version")
+    implementation("androidx.navigation:navigation-ui-ktx:$nav_version")
+
+    // Feature module Support
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:$nav_version")
+
+    // Testing Navigation
+    androidTestImplementation("androidx.navigation:navigation-testing:$nav_version")
+
+    // Jetpack Compose Integration
+    implementation("androidx.navigation:navigation-compose:$nav_version")
 
     // Bluetooth
     implementation("androidx.bluetooth:bluetooth:1.0.0-alpha02")
@@ -75,6 +95,9 @@ dependencies {
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.11.0")
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-ktx:2.6.1")
 

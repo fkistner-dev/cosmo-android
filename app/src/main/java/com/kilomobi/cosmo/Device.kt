@@ -15,7 +15,7 @@ data class Device(
     val macAddress: String,
     @ColumnInfo("model")
     @Json(name = "model")
-    val model: String,
+    val model: String?,
     @ColumnInfo("product")
     @Json(name = "product")
     val product: String,
@@ -24,20 +24,20 @@ data class Device(
     val firmwareVersion: String,
     @ColumnInfo(name = "serial")
     @Json(name = "serial")
-    val serial: String,
+    val serial: String?,
     @ColumnInfo(name = "installationMode")
     @Json(name = "installationMode")
-    val installationMode: String,
+    val installationMode: String?,
     @ColumnInfo(name = "brakeLight")
     @Json(name = "brakeLight")
     val brakeLight: Boolean,
     @ColumnInfo(name = "lightMode")
     @Json(name = "lightMode")
-    val lightMode: String,
+    val lightMode: String?,
     @ColumnInfo(name = "lightAuto")
     @Json(name = "lightAuto")
-    val lightAuto: Boolean,
+    val lightAuto: Boolean?,
     @ColumnInfo(name = "lightValue")
     @Json(name = "lightValue")
-    val lightValue: Int
+    val lightValue: Int?
 )
