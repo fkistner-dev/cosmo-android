@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">cosmo</string>
+    <string name="filter_title">Filtre</string>
+    <string name="filter_name">Puissance lumineuse</string>
+    <string name="product_list_title">Produits</string>
+    <string name="product_detail_model">Modèle</string>
+    <string name="product_detail_product">Produit</string>
+    <string name="product_detail_version">Version</string>
+    <string name="product_detail_mac">MAC</string>
+    <string name="product_detail_bluetooth_connect">SE CONNECTER</string>
+</resources>
