@@ -1,4 +1,4 @@
-package com.kilomobi.cosmo.ui.theme
+package com.kilomobi.cosmo.presentation.theme
 
 import android.app.Activity
 import android.os.Build

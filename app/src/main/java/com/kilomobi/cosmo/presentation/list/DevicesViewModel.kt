@@ -1,15 +1,20 @@
-package com.kilomobi.cosmo
+package com.kilomobi.cosmo.presentation.list
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kilomobi.cosmo.CosmoApiService
+import com.kilomobi.cosmo.Device
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class ProductsViewModel(
+@HiltViewModel
+class DevicesViewModel @Inject constructor(
     private val restInterface: CosmoApiService
 ) : ViewModel() {
     private val _state = mutableStateOf(

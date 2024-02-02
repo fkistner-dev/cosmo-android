@@ -1,4 +1,6 @@
-package com.kilomobi.cosmo
+package com.kilomobi.cosmo.presentation.list
+
+import com.kilomobi.cosmo.Device
 
 data class DevicesScreenState(
     val devices: List<Device>,

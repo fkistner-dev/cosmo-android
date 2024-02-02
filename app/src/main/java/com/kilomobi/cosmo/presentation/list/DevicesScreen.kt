@@ -1,4 +1,4 @@
-package com.kilomobi.cosmo
+package com.kilomobi.cosmo.presentation.list
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
@@ -49,6 +49,8 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
+import com.kilomobi.cosmo.Device
+import com.kilomobi.cosmo.R
 
 @Composable
 fun DevicesScreen(
@@ -92,6 +94,7 @@ fun DevicesScreen(
         }
         if (state.isLoading) {
             LinearProgressIndicator(
+                progress = 0.9f, // Bug -> https://issuetracker.google.com/issues/322214617
                 modifier = Modifier.fillMaxSize(),
                 color = colorResource(id = R.color.CosmoGrey),
                 trackColor = colorResource(id = R.color.CosmoGreen)

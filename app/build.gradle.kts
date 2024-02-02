@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -84,14 +86,16 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
     // Bluetooth
-    implementation("androidx.bluetooth:bluetooth:1.0.0-alpha02")
+    implementation("com.polidea.rxandroidble3:rxandroidble:1.18.0")
 
     // Network
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.4.0")
 
     // Dependency Injection
-    implementation("io.insert-koin:koin-android:3.5.3")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-compiler:2.50")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
