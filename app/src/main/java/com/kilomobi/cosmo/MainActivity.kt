@@ -3,14 +3,19 @@ package com.kilomobi.cosmo
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.kilomobi.cosmo.ui.theme.CosmoTheme
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.kilomobi.cosmo.presentation.details.BluetoothViewModel
+import com.kilomobi.cosmo.presentation.details.DetailsDeviceScreen
+import com.kilomobi.cosmo.presentation.list.DevicesScreen
+import com.kilomobi.cosmo.presentation.list.DevicesViewModel
+import com.kilomobi.cosmo.presentation.theme.CosmoTheme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val productsViewModel: ProductsViewModel by viewModel()
 
     companion object {
         const val DESTINATION_DEVICES_SCREEN = "destination_devices_screen"
@@ -23,6 +28,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             CosmoTheme {
                 val navController = rememberNavController()
+                val devicesViewModel: DevicesViewModel = hiltViewModel()
+                //val bluetoothViewModel: BluetoothViewModel = hiltViewModel()
 
                 NavHost(
                     navController = navController,
@@ -30,8 +37,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(DESTINATION_DEVICES_SCREEN) {
                         DevicesScreen(
-                            state = productsViewModel.state.value,
-                            loadDevices = { productsViewModel.loadDevices() },
+                            state = devicesViewModel.state.value,
+                            loadDevices = { devicesViewModel.loadDevices() },
                             onDeviceClick = { device ->
                                 DeviceHolder.selectedDevice = device
                                 navController.navigate(route = DESTINATION_DEVICE_DETAIL_SCREEN)
@@ -39,7 +46,7 @@ class MainActivity : ComponentActivity() {
                         )
                     }
                     composable(DESTINATION_DEVICE_DETAIL_SCREEN) {
-                        DeviceDetailsScreen(
+                        DetailsDeviceScreen(
                             DeviceHolder.selectedDevice!!
                         )
                     }
