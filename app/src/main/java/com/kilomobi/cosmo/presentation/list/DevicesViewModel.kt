@@ -42,6 +42,10 @@ class DevicesViewModel @Inject constructor(
         )
     }
 
+    init {
+        loadDevices()
+    }
+
     fun loadDevices() {
         viewModelScope.launch(errorHandler) {
             val remoteList = getDevicesUseCase()
@@ -49,12 +53,6 @@ class DevicesViewModel @Inject constructor(
                 devices = remoteList,
                 isLoading = false
             )
-        }
-    }
-
-    private suspend fun getRemoteDevices(): List<Device> {
-        return withContext(Dispatchers.IO) {
-            restInterface.getDevices().devices
         }
     }
 
