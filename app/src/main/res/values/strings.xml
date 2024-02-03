@@ -7,11 +7,11 @@
     <string name="product_detail_feature_brake_light">Emet une puissante lumière capable d\'aveugler votre poursuivant en mode offensif</string>
     <string name="product_detail_feature_light_auto">Réalise des appels de phare automatiquement</string>
     <string name="product_detail_feature_installation_mode">Mode d\'installation de votre produit Cosmo</string>
-    <string name="product_detail_model">Modèle :</string>
-    <string name="product_detail_product">Produit :</string>
-    <string name="product_detail_version">Version :</string>
-    <string name="product_detail_mac">MAC :</string>
-    <string name="product_detail_bluetooth">Informations Bluetooth :</string>
+    <string name="product_detail_model">Modèle : </string>
+    <string name="product_detail_product">Produit : </string>
+    <string name="product_detail_version">Version : </string>
+    <string name="product_detail_mac">MAC : </string>
+    <string name="product_detail_bluetooth">Informations Bluetooth : </string>
     <string name="product_detail_bluetooth_hint">veuillez connecter un appareil pour afficher les informations</string>
     <string name="product_detail_bluetooth_connect">SE CONNECTER</string>
     <string name="common_ok">OK</string>

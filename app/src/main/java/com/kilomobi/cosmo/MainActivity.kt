@@ -20,6 +20,7 @@ class MainActivity : ComponentActivity() {
     companion object {
         const val DESTINATION_DEVICES_SCREEN = "destination_devices_screen"
         const val DESTINATION_DEVICE_DETAIL_SCREEN = "destination_device_detail_screen"
+        const val DESTINATION_BLUETOOTH_SCREEN = "destination_bluetooth_screen"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +48,10 @@ class MainActivity : ComponentActivity() {
                     }
                     composable(DESTINATION_DEVICE_DETAIL_SCREEN) {
                         DetailsDeviceScreen(
-                            DeviceHolder.selectedDevice!!
+                            device = DeviceHolder.selectedDevice!!,
+                            onConnectClick = {
+                                navController.navigate(route = DESTINATION_BLUETOOTH_SCREEN)
+                            }
                         )
                     }
                 }

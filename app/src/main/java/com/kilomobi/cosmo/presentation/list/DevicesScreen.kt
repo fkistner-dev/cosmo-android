@@ -18,8 +18,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.outlined.List
+import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.automirrored.outlined.List
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -46,11 +46,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.kilomobi.cosmo.Device
 import com.kilomobi.cosmo.R
+import com.kilomobi.cosmo.domain.GetDeviceImageUseCase
+import com.kilomobi.cosmo.presentation.theme.CosmoTheme
 
 @Composable
 fun DevicesScreen(
@@ -63,25 +66,25 @@ fun DevicesScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painterResource(id = R.drawable.cosmo_ride),
+            painterResource(id = R.drawable.cosmo_logo),
             contentDescription = "logo",
             modifier = Modifier
-                .size(300.dp)
+                .size(150.dp)
                 .clip(CircleShape)
         )
         Box(
             modifier = Modifier
-                .padding(top = 16.dp)
                 .background(color = colorResource(id = R.color.CosmoGreen))
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(horizontal = 16.dp),
             contentAlignment = Alignment.Center
         ) {
             Column {
                 Text(
                     text = stringResource(id = R.string.filter_title),
                     color = Color.White,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(top = 8.dp)
                 )
                 Text(
                     text = stringResource(id = R.string.filter_name),
@@ -126,18 +129,17 @@ fun FilterSlider(
     onFilterValueChanged: (Float) -> Unit
 ) {
     Row(
-        modifier = Modifier.padding(vertical = 16.dp, horizontal = 8.dp),
+        modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Image(
-            imageVector = Icons.Outlined.List,
+            imageVector = Icons.AutoMirrored.Outlined.List,
             contentDescription = "light-icon",
             colorFilter = ColorFilter.tint(Color.White),
             modifier = Modifier
                 .size(40.dp)
                 .fillMaxHeight()
                 .align(Alignment.CenterVertically)
-                .padding(vertical = 8.dp)
         )
         Slider(
             value = lightFiltering,
@@ -154,7 +156,6 @@ fun FilterSlider(
             modifier = Modifier
                 .fillMaxWidth()
                 .align(Alignment.CenterVertically)
-                .padding(vertical = 8.dp)
         )
     }
 }
@@ -170,19 +171,18 @@ fun DeviceList(devices: List<Device>, onClick: (Device) -> Unit) {
             Text(
                 text = stringResource(id = R.string.product_list_title),
                 color = Color.White,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
             )
         }
         Row(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxWidth()
                 .padding(16.dp)
         ) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(vertical = 16.dp)
-                    .padding(16.dp)
+                    .padding(vertical = 24.dp)
             ) {
                 items(devices) { device ->
                     DeviceListItem(device = device, onClick)
@@ -226,7 +226,7 @@ fun DeviceListItem(device: Device, onClick: (Device) -> Unit) {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Image(
-                    painter = rememberImagePainter(data = R.drawable.cosmo_vision),
+                    painter = rememberImagePainter(data = GetDeviceImageUseCase().invoke(device.model)),
                     contentDescription = "image",
                     modifier = Modifier
                         .size(60.dp)
@@ -238,24 +238,36 @@ fun DeviceListItem(device: Device, onClick: (Device) -> Unit) {
                         .weight(1f)
                         .padding(start = 16.dp)
                 ) {
-                    Text(
-                        text = stringResource(id = R.string.product_detail_product) + device.product,
-                        color = Color.White,
-                        fontSize = 16.sp
-                    )
-                    Text(
-                        text = stringResource(id = R.string.product_detail_model) + device.model,
-                        color = Color.White,
-                        fontSize = 14.sp
-                    )
+                    device.product?.let { deviceProduct ->
+                        Text(
+                            text = stringResource(id = R.string.product_detail_product) + deviceProduct,
+                            color = Color.White,
+                            fontSize = 16.sp
+                        )
+                    }
+                    device.model?.let { deviceModel ->
+                        Text(
+                            text = stringResource(id = R.string.product_detail_model) + deviceModel,
+                            color = Color.White,
+                            fontSize = 14.sp
+                        )
+                    }
                 }
                 Icon(
-                    imageVector = Icons.Default.ArrowForward,
+                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
                     contentDescription = "icon",
                     tint = Color.White,
                     modifier = Modifier.size(24.dp)
                 )
             }
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun DevicesScreenPreview() {
+    CosmoTheme {
+        DevicesScreen(DevicesScreenState(listOf(), false, null, 100f), {}, {})
     }
 }

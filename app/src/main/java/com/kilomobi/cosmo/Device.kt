@@ -18,7 +18,7 @@ data class Device(
     val model: String?,
     @ColumnInfo("product")
     @Json(name = "product")
-    val product: String,
+    val product: String?,
     @ColumnInfo(name = "firmwareVersion")
     @Json(name = "firmwareVersion")
     val firmwareVersion: String,
@@ -41,3 +41,5 @@ data class Device(
     @Json(name = "lightValue")
     val lightValue: Int?
 )
+
+val mockedDevice = Device(deviceId=0, macAddress="4921201e38d5", model="RIDE", product="RIDE", firmwareVersion="2.2.2", serial="BC892C9C-047D-8402-A9FD-7B2CC0048736", installationMode="helmet", brakeLight=false, lightMode="OFF", lightAuto=false, lightValue=0)
