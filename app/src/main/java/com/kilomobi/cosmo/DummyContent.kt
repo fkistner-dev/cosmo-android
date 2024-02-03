@@ -1,5 +1,6 @@
 package com.kilomobi.cosmo
 
+import android.bluetooth.BluetoothDevice
 import com.kilomobi.cosmo.presentation.details.Device
 import com.kilomobi.cosmo.presentation.details.DeviceDetailIcon
 import com.kilomobi.cosmo.presentation.list.RemoteDevices
@@ -40,5 +41,10 @@ object DummyContent {
         )
 
         return features
+    }
+
+    fun getBluetoothList(): List<BluetoothDevice> {
+        // TODO handle BluetoothDevice on a custom object because his constructor is protected
+        return listOf()
     }
 }
