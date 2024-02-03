@@ -1,5 +1,6 @@
-package com.kilomobi.cosmo
+package com.kilomobi.cosmo.data.remote
 
+import com.kilomobi.cosmo.presentation.list.RemoteDevices
 import retrofit2.http.GET
 
 interface CosmoApiService {

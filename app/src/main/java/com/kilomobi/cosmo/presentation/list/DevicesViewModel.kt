@@ -4,9 +4,13 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kilomobi.cosmo.CosmoApiService
-import com.kilomobi.cosmo.Device
+import com.kilomobi.cosmo.data.DevicesRepository
+import com.kilomobi.cosmo.data.remote.CosmoApiService
+import com.kilomobi.cosmo.presentation.details.Device
+import com.kilomobi.cosmo.data.di.IoDispatcher
+import com.kilomobi.cosmo.domain.GetDevicesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -15,7 +19,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DevicesViewModel @Inject constructor(
-    private val restInterface: CosmoApiService
+    private val restInterface: CosmoApiService,
+    private val getDevicesUseCase: GetDevicesUseCase,
+    @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _state = mutableStateOf(
         DevicesScreenState(
@@ -36,18 +42,12 @@ class DevicesViewModel @Inject constructor(
         )
     }
 
-    init {
-        loadDevices()
-    }
-
     fun loadDevices() {
         viewModelScope.launch(errorHandler) {
-            val remoteList = getRemoteDevices()
+            val remoteList = getDevicesUseCase()
             _state.value = _state.value.copy(
                 devices = remoteList,
-                isLoading = false,
-                error = null,
-                lightFiltering = 100f
+                isLoading = false
             )
         }
     }

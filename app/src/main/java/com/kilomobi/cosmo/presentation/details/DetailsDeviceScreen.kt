@@ -23,11 +23,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.kilomobi.cosmo.Device
+import com.kilomobi.cosmo.DummyContent
 import com.kilomobi.cosmo.R
 import com.kilomobi.cosmo.domain.GetDeviceFeaturesUseCase
 import com.kilomobi.cosmo.domain.GetDeviceImageUseCase
-import com.kilomobi.cosmo.mockedDevice
 import com.kilomobi.cosmo.presentation.theme.CosmoTheme
 
 @Composable
@@ -198,7 +197,7 @@ fun DetailDeviceScreenPreview() {
             ),
         )
         DetailsDeviceScreen(
-            device = mockedDevice, {}
-        )
+            device = DummyContent.getDevice()
+        ) {}
     }
 }

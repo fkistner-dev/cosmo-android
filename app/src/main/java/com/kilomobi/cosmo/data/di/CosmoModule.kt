@@ -1,6 +1,9 @@
-package com.kilomobi.cosmo
+package com.kilomobi.cosmo.data.di
 
 import android.bluetooth.BluetoothAdapter
+import com.kilomobi.cosmo.data.BluetoothRepository
+import com.kilomobi.cosmo.data.BluetoothRepositoryImpl
+import com.kilomobi.cosmo.data.remote.CosmoApiService
 import com.kilomobi.cosmo.domain.BluetoothScanner
 import com.kilomobi.cosmo.domain.CosmoBluetoothScanner
 import com.kilomobi.cosmo.presentation.details.BluetoothViewModel

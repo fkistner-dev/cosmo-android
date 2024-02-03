@@ -13,6 +13,7 @@ import com.kilomobi.cosmo.domain.GetPermissionsUseCase
 import com.kilomobi.cosmo.presentation.bluetooth.BluetoothScreen
 import com.kilomobi.cosmo.presentation.details.BluetoothViewModel
 import com.kilomobi.cosmo.presentation.details.DetailsDeviceScreen
+import com.kilomobi.cosmo.presentation.details.Device
 import com.kilomobi.cosmo.presentation.list.DevicesScreen
 import com.kilomobi.cosmo.presentation.list.DevicesViewModel
 import com.kilomobi.cosmo.presentation.theme.CosmoTheme

@@ -1,6 +1,6 @@
 package com.kilomobi.cosmo.domain
 
-import com.kilomobi.cosmo.BluetoothRepository
+import com.kilomobi.cosmo.data.BluetoothRepository
 import javax.inject.Inject
 
 class StopBluetoothScanUseCase @Inject constructor(

@@ -1,7 +1,7 @@
 package com.kilomobi.cosmo.domain
 
 import android.bluetooth.BluetoothDevice
-import com.kilomobi.cosmo.BluetoothRepository
+import com.kilomobi.cosmo.data.BluetoothRepository
 import javax.inject.Inject
 
 class StartBluetoothScanUseCase @Inject constructor(

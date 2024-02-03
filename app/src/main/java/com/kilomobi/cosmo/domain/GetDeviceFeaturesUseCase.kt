@@ -1,6 +1,6 @@
 package com.kilomobi.cosmo.domain
 
-import com.kilomobi.cosmo.Device
+import com.kilomobi.cosmo.presentation.details.Device
 import com.kilomobi.cosmo.R
 import com.kilomobi.cosmo.presentation.details.DeviceDetailIcon
 
@@ -21,13 +21,15 @@ class GetDeviceFeaturesUseCase {
                 R.string.product_detail_feature_brake_light
             )
         )
-        device.lightAuto?.let {
-            features.add(
-                DeviceDetailIcon(
-                    icon = R.drawable.baseline_highlight_24,
-                    R.string.product_detail_feature_light_auto
+        device.lightAuto?.let { hasFeature ->
+            if (hasFeature) {
+                features.add(
+                    DeviceDetailIcon(
+                        icon = R.drawable.baseline_highlight_24,
+                        R.string.product_detail_feature_light_auto
+                    )
                 )
-            )
+            }
         }
 
         return features

@@ -1,4 +1,4 @@
-package com.kilomobi.cosmo
+package com.kilomobi.cosmo.data
 
 import android.bluetooth.BluetoothDevice
 import com.kilomobi.cosmo.domain.BluetoothScanner
