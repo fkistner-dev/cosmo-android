@@ -28,8 +28,6 @@ import com.kilomobi.cosmo.R
 import com.kilomobi.cosmo.domain.GetDeviceFeaturesUseCase
 import com.kilomobi.cosmo.domain.GetDeviceImageUseCase
 import com.kilomobi.cosmo.mockedDevice
-import com.kilomobi.cosmo.presentation.list.DevicesScreen
-import com.kilomobi.cosmo.presentation.list.DevicesScreenState
 import com.kilomobi.cosmo.presentation.theme.CosmoTheme
 
 @Composable

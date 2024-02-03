@@ -2,40 +2,65 @@ package com.kilomobi.cosmo.presentation.details
 
 import android.bluetooth.BluetoothDevice
 import android.util.Log
-import androidx.lifecycle.LiveData
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kilomobi.cosmo.domain.StartBluetoothScanUseCase
-import com.kilomobi.cosmo.domain.StopBluetoothScanUseCase
+import com.kilomobi.cosmo.BluetoothRepository
+import com.kilomobi.cosmo.presentation.bluetooth.BluetoothScreenState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class BluetoothViewModel @Inject constructor(
-    private val startBluetoothScanUseCase: StartBluetoothScanUseCase,
-    private val stopBluetoothScanUseCase: StopBluetoothScanUseCase
+    private val bluetoothRepository: BluetoothRepository,
 ) : ViewModel() {
 
-    private val bluetoothScanResults = MutableLiveData<List<BluetoothDevice>>()
+    private val _state = mutableStateOf(
+        BluetoothScreenState(
+            permissionGranted = false,
+            bluetoothDevices = emptyList(),
+            isSearching = true,
+            error = null
+        )
+    )
 
-    fun getBluetoothScanResults(): LiveData<List<BluetoothDevice>> = bluetoothScanResults
+    val state: State<BluetoothScreenState>
+        get() = _state
+
+    private val bluetoothScanResults = MutableLiveData<List<BluetoothDevice>>()
 
     fun startBluetoothScan() {
         viewModelScope.launch {
             try {
-                val devices = startBluetoothScanUseCase.execute()
+                val devices = bluetoothRepository.startBluetoothScan()
                 bluetoothScanResults.value = devices
+                _state.value = _state.value.copy(
+                    bluetoothDevices = devices.toList(),
+                    isSearching = false
+                )
+                stopBluetoothScan()
             } catch (e: Exception) {
-                // Gérer les erreurs
+                _state.value = _state.value.copy(
+                    error = e.message,
+                    isSearching = false
+                )
+                Log.d(BluetoothViewModel::class.java.name, "Error caught while starting scan ${e.message}")
             }
         }
     }
 
-    fun stopBluetoothScan() {
+    private fun stopBluetoothScan() {
         viewModelScope.launch {
             try {
-                stopBluetoothScanUseCase.execute()
+                bluetoothRepository.stopBluetoothScan()
             } catch (e: Exception) {
+                _state.value = _state.value.copy(
+                    error = e.message,
+                    isSearching = false
+                )
                 Log.d(BluetoothViewModel::class.java.name, "Error caught while stopping scan ${e.message}")
             }
         }

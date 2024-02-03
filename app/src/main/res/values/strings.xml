@@ -14,6 +14,7 @@
     <string name="product_detail_bluetooth">Informations Bluetooth : </string>
     <string name="product_detail_bluetooth_hint">veuillez connecter un appareil pour afficher les informations</string>
     <string name="product_detail_bluetooth_connect">SE CONNECTER</string>
+    <string name="common_permissions_denied">Veuillez accepter les permissions</string>
     <string name="common_ok">OK</string>
     <string name="common_retry">RECHARGER</string>
 </resources>

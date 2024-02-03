@@ -12,12 +12,12 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import javax.inject.Inject
 
 class CosmoBluetoothScanner @Inject constructor(
-    private val bluetoothAdapter: BluetoothAdapter
+    private val bluetoothAdapter: BluetoothAdapter?
 ) : BluetoothScanner {
     override suspend fun startScan(): List<BluetoothDevice> = coroutineScope {
         return@coroutineScope try {
             suspendCancellableCoroutine { continuation ->
-                if (!bluetoothAdapter.isEnabled) {
+                if (bluetoothAdapter?.isEnabled == false) {
                     continuation.cancel(BluetoothNotEnabledException("Bluetooth is not enabled"))
                     return@suspendCancellableCoroutine
                 }
@@ -34,16 +34,16 @@ class CosmoBluetoothScanner @Inject constructor(
                     }
                 }
 
-                val scanner = bluetoothAdapter.bluetoothLeScanner
-                scanner.startScan(scanCallback)
+                val scanner = bluetoothAdapter?.bluetoothLeScanner
+                scanner?.startScan(scanCallback)
 
                 continuation.invokeOnCancellation {
-                    scanner.stopScan(scanCallback)
+                    scanner?.stopScan(scanCallback)
                 }
 
                 launch {
-                    delay(10000) // Simulate scan
-                    scanner.stopScan(scanCallback)
+                    delay(20000)
+                    scanner?.stopScan(scanCallback)
                     continuation.resume(devices) {
                         it.printStackTrace()
                     }

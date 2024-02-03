@@ -85,9 +85,6 @@ dependencies {
     // Jetpack Compose Integration
     implementation("androidx.navigation:navigation-compose:$nav_version")
 
-    // Bluetooth
-    implementation("com.polidea.rxandroidble3:rxandroidble:1.18.0")
-
     // Network
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-moshi:2.4.0")

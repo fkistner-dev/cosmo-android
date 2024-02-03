@@ -1,12 +1,16 @@
 package com.kilomobi.cosmo
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.kilomobi.cosmo.domain.GetPermissionsUseCase
+import com.kilomobi.cosmo.presentation.bluetooth.BluetoothScreen
 import com.kilomobi.cosmo.presentation.details.BluetoothViewModel
 import com.kilomobi.cosmo.presentation.details.DetailsDeviceScreen
 import com.kilomobi.cosmo.presentation.list.DevicesScreen
@@ -17,6 +21,11 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private val permissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            handlePermissionsResult(permissions)
+        }
+
     companion object {
         const val DESTINATION_DEVICES_SCREEN = "destination_devices_screen"
         const val DESTINATION_DEVICE_DETAIL_SCREEN = "destination_device_detail_screen"
@@ -25,12 +34,14 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val permissions = GetPermissionsUseCase().invoke()
+        permissionLauncher.launch(permissions)
 
         setContent {
             CosmoTheme {
                 val navController = rememberNavController()
                 val devicesViewModel: DevicesViewModel = hiltViewModel()
-                //val bluetoothViewModel: BluetoothViewModel = hiltViewModel()
+                val bluetoothViewModel: BluetoothViewModel = hiltViewModel()
 
                 NavHost(
                     navController = navController,
@@ -41,16 +52,25 @@ class MainActivity : ComponentActivity() {
                             state = devicesViewModel.state.value,
                             loadDevices = { devicesViewModel.loadDevices() },
                             onDeviceClick = { device ->
-                                DeviceHolder.selectedDevice = device
+                                ActivityHelper.selectedDevice = device
                                 navController.navigate(route = DESTINATION_DEVICE_DETAIL_SCREEN)
                             }
                         )
                     }
                     composable(DESTINATION_DEVICE_DETAIL_SCREEN) {
                         DetailsDeviceScreen(
-                            device = DeviceHolder.selectedDevice!!,
+                            device = ActivityHelper.selectedDevice!!,
                             onConnectClick = {
-                                navController.navigate(route = DESTINATION_BLUETOOTH_SCREEN)
+                                if (ActivityHelper.permissionsGranted) navController.navigate(route = DESTINATION_BLUETOOTH_SCREEN)
+                                else permissionLauncher.launch(permissions)
+                            }
+                        )
+                    }
+                    composable(DESTINATION_BLUETOOTH_SCREEN) {
+                        BluetoothScreen(
+                            state = bluetoothViewModel.state.value,
+                            onPermissionRequest = {
+                                bluetoothViewModel.startBluetoothScan()
                             }
                         )
                     }
@@ -59,7 +79,24 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    object DeviceHolder {
+    private fun handlePermissionsResult(permissions: Map<String, Boolean>) {
+        var globalPermission = true
+        for ((permission, isGranted) in permissions) {
+            if (!isGranted) {
+                globalPermission = false
+            }
+        }
+
+        if (globalPermission) ActivityHelper.permissionsGranted = true
+        else Toast.makeText(
+            applicationContext,
+            applicationContext.getText(R.string.common_permissions_denied),
+            Toast.LENGTH_LONG
+        ).show()
+    }
+
+    object ActivityHelper {
         var selectedDevice: Device? = null
+        var permissionsGranted: Boolean = false
     }
 }
