@@ -54,7 +54,8 @@ class MainActivity : ComponentActivity() {
                             onDeviceClick = { device ->
                                 ActivityHelper.selectedDevice = device
                                 navController.navigate(route = DESTINATION_DEVICE_DETAIL_SCREEN)
-                            }
+                            },
+                            onFilterValueChanged = { devicesViewModel.updateFilterValue(it) }
                         )
                     }
                     composable(DESTINATION_DEVICE_DETAIL_SCREEN) {

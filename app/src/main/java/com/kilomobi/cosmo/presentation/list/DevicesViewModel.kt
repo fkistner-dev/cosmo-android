@@ -57,4 +57,10 @@ class DevicesViewModel @Inject constructor(
             restInterface.getDevices().devices
         }
     }
+
+    fun updateFilterValue(filterValue: Float) {
+        _state.value = _state.value.copy(
+            lightFiltering = filterValue
+        )
+    }
 }

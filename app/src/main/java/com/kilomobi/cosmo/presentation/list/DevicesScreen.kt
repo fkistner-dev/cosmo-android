@@ -53,11 +53,15 @@ import coil.compose.rememberImagePainter
 import com.kilomobi.cosmo.Device
 import com.kilomobi.cosmo.R
 import com.kilomobi.cosmo.domain.GetDeviceImageUseCase
+import com.kilomobi.cosmo.domain.GetFilteredDevices
 import com.kilomobi.cosmo.presentation.theme.CosmoTheme
 
 @Composable
 fun DevicesScreen(
-    state: DevicesScreenState, loadDevices: () -> Unit, onDeviceClick: (Device) -> Unit
+    state: DevicesScreenState,
+    loadDevices: () -> Unit,
+    onDeviceClick: (Device) -> Unit,
+    onFilterValueChanged: (Float) -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -92,7 +96,7 @@ fun DevicesScreen(
                     fontSize = 18.sp,
                     fontStyle = FontStyle.Italic
                 )
-                FilterSlider(state.lightFiltering) { }
+                FilterSlider(state.lightFiltering, onFilterValueChanged)
             }
         }
         if (state.isLoading) {
@@ -118,7 +122,8 @@ fun DevicesScreen(
             }
         }
         if (state.devices.isNotEmpty()) {
-            DeviceList(devices = state.devices, onDeviceClick)
+            val getDisplayableDevices = GetFilteredDevices().invoke(state.devices, state.lightFiltering)
+            DeviceList(devices = getDisplayableDevices, onDeviceClick)
         }
     }
 }
@@ -133,7 +138,7 @@ fun FilterSlider(
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Image(
-            imageVector = Icons.AutoMirrored.Outlined.List,
+            painterResource(id = R.drawable.baseline_highlight_24),
             contentDescription = "light-icon",
             colorFilter = ColorFilter.tint(Color.White),
             modifier = Modifier
@@ -268,6 +273,6 @@ fun DeviceListItem(device: Device, onClick: (Device) -> Unit) {
 @Composable
 fun DevicesScreenPreview() {
     CosmoTheme {
-        DevicesScreen(DevicesScreenState(listOf(), false, null, 100f), {}, {})
+        DevicesScreen(DevicesScreenState(listOf(), false, null, 100f), {}, {}, {})
     }
 }
