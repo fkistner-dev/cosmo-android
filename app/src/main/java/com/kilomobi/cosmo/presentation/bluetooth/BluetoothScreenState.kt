@@ -1,10 +1,8 @@
 package com.kilomobi.cosmo.presentation.bluetooth
 
-import android.bluetooth.BluetoothDevice
-
 data class BluetoothScreenState(
     val permissionGranted: Boolean,
-    val bluetoothDevices: List<BluetoothDevice>,
+    val bluetoothDevices: List<CosmoListItemDevice>,
     val isSearching: Boolean,
     val error: String? = null
 )

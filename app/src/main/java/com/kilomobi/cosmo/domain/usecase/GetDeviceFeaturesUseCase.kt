@@ -1,11 +1,11 @@
-package com.kilomobi.cosmo.domain
+package com.kilomobi.cosmo.domain.usecase
 
-import com.kilomobi.cosmo.presentation.details.Device
+import com.kilomobi.cosmo.data.remote.RemoteDevice
 import com.kilomobi.cosmo.R
 import com.kilomobi.cosmo.presentation.details.DeviceDetailIcon
 
 class GetDeviceFeaturesUseCase {
-    operator fun invoke(device: Device): List<DeviceDetailIcon> {
+    operator fun invoke(device: RemoteDevice): List<DeviceDetailIcon> {
         val features = mutableListOf<DeviceDetailIcon>()
         device.installationMode?.let {
             features.add(

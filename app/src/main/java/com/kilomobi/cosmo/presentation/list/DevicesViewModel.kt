@@ -4,9 +4,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kilomobi.cosmo.data.remote.CosmoApiService
 import com.kilomobi.cosmo.data.di.IoDispatcher
-import com.kilomobi.cosmo.domain.GetDevicesUseCase
+import com.kilomobi.cosmo.domain.usecase.GetDevicesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -15,7 +14,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DevicesViewModel @Inject constructor(
-    private val restInterface: CosmoApiService,
     private val getDevicesUseCase: GetDevicesUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {

@@ -1,10 +1,11 @@
-package com.kilomobi.cosmo.domain
+package com.kilomobi.cosmo.data
 
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.bluetooth.le.ScanCallback
 import android.bluetooth.le.ScanResult
 import android.util.Log
+import com.kilomobi.cosmo.domain.BluetoothRepository
+import com.kilomobi.cosmo.presentation.bluetooth.CosmoListItemDevice
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -13,8 +14,8 @@ import javax.inject.Inject
 
 class CosmoBluetoothScanner @Inject constructor(
     private val bluetoothAdapter: BluetoothAdapter?
-) : BluetoothScanner {
-    override suspend fun startScan(): List<BluetoothDevice> = coroutineScope {
+) : BluetoothRepository {
+    override suspend fun startScan(): List<CosmoListItemDevice> = coroutineScope {
         return@coroutineScope try {
             suspendCancellableCoroutine { continuation ->
                 if (bluetoothAdapter?.isEnabled == false) {
@@ -22,11 +23,13 @@ class CosmoBluetoothScanner @Inject constructor(
                     return@suspendCancellableCoroutine
                 }
 
-                val devices = mutableListOf<BluetoothDevice>()
+                val devices = mutableListOf<CosmoListItemDevice>()
 
                 val scanCallback = object : ScanCallback() {
                     override fun onScanResult(callbackType: Int, result: ScanResult) {
-                        devices.add(result.device)
+                        val device = CosmoListItemDevice(result.device.name, result.device.address)
+                        if (!devices.contains(device))
+                            devices.add(device)
                     }
 
                     override fun onScanFailed(errorCode: Int) {
@@ -42,7 +45,7 @@ class CosmoBluetoothScanner @Inject constructor(
                 }
 
                 launch {
-                    delay(20000)
+                    delay(10000)
                     scanner?.stopScan(scanCallback)
                     continuation.resume(devices) {
                         it.printStackTrace()

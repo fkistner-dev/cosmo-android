@@ -1,4 +1,4 @@
-package com.kilomobi.cosmo.domain
+package com.kilomobi.cosmo.domain.usecase
 
 import com.kilomobi.cosmo.R
 

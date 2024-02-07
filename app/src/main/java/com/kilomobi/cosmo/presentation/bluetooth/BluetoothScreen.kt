@@ -56,7 +56,7 @@ fun BluetoothScreen(state: BluetoothScreenState, onPermissionRequest: () -> Unit
             }
             if (state.bluetoothDevices.isNotEmpty()) {
                 BluetoothDeviceList(state.bluetoothDevices.map {
-                    CosmoBluetoothDevice(it.name, it.address)
+                    CosmoListItemDevice(it.name, it.address)
                 })
             }
         }
@@ -65,7 +65,7 @@ fun BluetoothScreen(state: BluetoothScreenState, onPermissionRequest: () -> Unit
 
 @Composable
 fun CountdownTimerText() {
-    var time by remember { mutableIntStateOf(20) }
+    var time by remember { mutableIntStateOf(10) }
 
     DisposableEffect(Unit) {
         val job = GlobalScope.launch {
@@ -90,7 +90,7 @@ fun CountdownTimerText() {
 }
 
 @Composable
-fun BluetoothDeviceList(devices: List<CosmoBluetoothDevice>) {
+fun BluetoothDeviceList(devices: List<CosmoListItemDevice>) {
     LazyColumn {
         items(devices) { device ->
             BluetoothDeviceItem(device = device)
@@ -99,7 +99,7 @@ fun BluetoothDeviceList(devices: List<CosmoBluetoothDevice>) {
 }
 
 @Composable
-fun BluetoothDeviceItem(device: CosmoBluetoothDevice) {
+fun BluetoothDeviceItem(device: CosmoListItemDevice) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -114,7 +114,7 @@ fun BluetoothDeviceItem(device: CosmoBluetoothDevice) {
 @Composable
 fun PreviewBluetoothDeviceList() {
     val devices = List(10) {
-        CosmoBluetoothDevice("Device $it", "00:00:00:00:22:22")
+        CosmoListItemDevice("Device $it", "00:00:00:00:22:22")
     }
     BluetoothDeviceList(devices = devices)
 }
@@ -122,8 +122,8 @@ fun PreviewBluetoothDeviceList() {
 @Preview
 @Composable
 fun PreviewBluetoothDeviceItem() {
-    val device = CosmoBluetoothDevice("Device", "00:00:00:00:11:11")
+    val device = CosmoListItemDevice("Device", "00:00:00:00:11:11")
     BluetoothDeviceItem(device = device)
 }
 
-data class CosmoBluetoothDevice(val name: String?, val address: String)
+data class CosmoListItemDevice(val name: String?, val address: String)

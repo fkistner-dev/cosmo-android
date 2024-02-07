@@ -1,8 +1,9 @@
 package com.kilomobi.cosmo
 
 import com.kilomobi.cosmo.data.DevicesRepository
-import com.kilomobi.cosmo.domain.GetDeviceFeaturesUseCase
-import com.kilomobi.cosmo.domain.GetDeviceImageUseCase
+import com.kilomobi.cosmo.domain.usecase.GetDeviceFeaturesUseCase
+import com.kilomobi.cosmo.domain.usecase.GetDeviceImageUseCase
+import com.kilomobi.cosmo.presentation.DummyContent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope

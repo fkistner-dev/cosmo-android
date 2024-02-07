@@ -1,21 +1,23 @@
 package com.kilomobi.cosmo.presentation.details
 
-import android.bluetooth.BluetoothDevice
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kilomobi.cosmo.data.BluetoothRepository
+import com.kilomobi.cosmo.domain.BluetoothRepository
+import com.kilomobi.cosmo.domain.usecase.StartBluetoothScanUseCase
 import com.kilomobi.cosmo.presentation.bluetooth.BluetoothScreenState
+import com.kilomobi.cosmo.presentation.bluetooth.CosmoListItemDevice
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class BluetoothViewModel @Inject constructor(
-    private val bluetoothRepository: BluetoothRepository,
+    private val bluetoothScanner: BluetoothRepository,
+    private val startBluetoothScanUseCase: StartBluetoothScanUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(
@@ -30,12 +32,12 @@ class BluetoothViewModel @Inject constructor(
     val state: State<BluetoothScreenState>
         get() = _state
 
-    private val bluetoothScanResults = MutableLiveData<List<BluetoothDevice>>()
+    private val bluetoothScanResults = MutableLiveData<List<CosmoListItemDevice>>()
 
     fun startBluetoothScan() {
         viewModelScope.launch {
             try {
-                val devices = bluetoothRepository.startBluetoothScan()
+                val devices = startBluetoothScanUseCase()
                 bluetoothScanResults.value = devices
                 _state.value = _state.value.copy(
                     bluetoothDevices = devices.toList(),
@@ -55,7 +57,7 @@ class BluetoothViewModel @Inject constructor(
     private fun stopBluetoothScan() {
         viewModelScope.launch {
             try {
-                bluetoothRepository.stopBluetoothScan()
+                bluetoothScanner.stopScan()
             } catch (e: Exception) {
                 _state.value = _state.value.copy(
                     error = e.message,

@@ -50,17 +50,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
-import com.kilomobi.cosmo.presentation.details.Device
+import com.kilomobi.cosmo.data.remote.RemoteDevice
 import com.kilomobi.cosmo.R
-import com.kilomobi.cosmo.domain.GetDeviceImageUseCase
-import com.kilomobi.cosmo.domain.GetFilteredDevices
+import com.kilomobi.cosmo.domain.usecase.GetDeviceImageUseCase
+import com.kilomobi.cosmo.domain.usecase.GetFilteredDevicesUseCase
 import com.kilomobi.cosmo.presentation.theme.CosmoTheme
 
 @Composable
 fun DevicesScreen(
     state: DevicesScreenState,
     loadDevices: () -> Unit,
-    onDeviceClick: (Device) -> Unit,
+    onDeviceClick: (RemoteDevice) -> Unit,
     onFilterValueChanged: (Float) -> Unit
 ) {
     Column(
@@ -123,7 +123,7 @@ fun DevicesScreen(
             }
         }
         if (state.devices.isNotEmpty()) {
-            val getDisplayableDevices = GetFilteredDevices().invoke(state.devices, state.lightFiltering)
+            val getDisplayableDevices = GetFilteredDevicesUseCase().invoke(state.devices, state.lightFiltering)
             DeviceList(devices = getDisplayableDevices, onDeviceClick)
         }
     }
@@ -167,7 +167,7 @@ fun FilterSlider(
 }
 
 @Composable
-fun DeviceList(devices: List<Device>, onClick: (Device) -> Unit) {
+fun DeviceList(devices: List<RemoteDevice>, onClick: (RemoteDevice) -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -199,7 +199,7 @@ fun DeviceList(devices: List<Device>, onClick: (Device) -> Unit) {
 }
 
 @Composable
-fun DeviceListItem(device: Device, onClick: (Device) -> Unit) {
+fun DeviceListItem(device: RemoteDevice, onClick: (RemoteDevice) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     val transitionState = rememberUpdatedState(expanded)
 

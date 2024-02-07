@@ -2,7 +2,7 @@ package com.kilomobi.cosmo.data
 
 import com.kilomobi.cosmo.data.di.IoDispatcher
 import com.kilomobi.cosmo.data.remote.CosmoApiService
-import com.kilomobi.cosmo.presentation.details.Device
+import com.kilomobi.cosmo.data.remote.RemoteDevice
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -15,9 +15,9 @@ class DevicesRepository @Inject constructor(
     private val restInterface: CosmoApiService,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) {
-    private var _devices = listOf<Device>()
+    private var _devices = listOf<RemoteDevice>()
 
-    val devices: List<Device>
+    val devices: List<RemoteDevice>
         get() = _devices
 
     suspend fun loadDevices() {

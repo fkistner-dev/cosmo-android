@@ -1,4 +1,4 @@
-package com.kilomobi.cosmo.domain
+package com.kilomobi.cosmo.domain.usecase
 
 import android.Manifest
 import android.os.Build

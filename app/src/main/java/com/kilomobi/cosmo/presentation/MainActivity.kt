@@ -1,4 +1,4 @@
-package com.kilomobi.cosmo
+package com.kilomobi.cosmo.presentation
 
 import android.os.Bundle
 import android.widget.Toast
@@ -9,11 +9,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.kilomobi.cosmo.domain.GetPermissionsUseCase
+import com.kilomobi.cosmo.R
+import com.kilomobi.cosmo.domain.usecase.GetPermissionsUseCase
 import com.kilomobi.cosmo.presentation.bluetooth.BluetoothScreen
 import com.kilomobi.cosmo.presentation.details.BluetoothViewModel
 import com.kilomobi.cosmo.presentation.details.DetailsDeviceScreen
-import com.kilomobi.cosmo.presentation.details.Device
+import com.kilomobi.cosmo.data.remote.RemoteDevice
 import com.kilomobi.cosmo.presentation.list.DevicesScreen
 import com.kilomobi.cosmo.presentation.list.DevicesViewModel
 import com.kilomobi.cosmo.presentation.theme.CosmoTheme
@@ -83,7 +84,7 @@ class MainActivity : ComponentActivity() {
 
     private fun handlePermissionsResult(permissions: Map<String, Boolean>) {
         var globalPermission = true
-        for ((permission, isGranted) in permissions) {
+        for ((_, isGranted) in permissions) {
             if (!isGranted) {
                 globalPermission = false
             }
@@ -98,7 +99,7 @@ class MainActivity : ComponentActivity() {
     }
 
     object ActivityHelper {
-        var selectedDevice: Device? = null
+        var selectedDevice: RemoteDevice? = null
         var permissionsGranted: Boolean = false
     }
 }

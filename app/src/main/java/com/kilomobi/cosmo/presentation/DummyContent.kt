@@ -1,15 +1,16 @@
-package com.kilomobi.cosmo
+package com.kilomobi.cosmo.presentation
 
-import android.bluetooth.BluetoothDevice
-import com.kilomobi.cosmo.presentation.details.Device
+import com.kilomobi.cosmo.R
+import com.kilomobi.cosmo.data.remote.RemoteDevice
+import com.kilomobi.cosmo.presentation.bluetooth.CosmoListItemDevice
 import com.kilomobi.cosmo.presentation.details.DeviceDetailIcon
 import com.kilomobi.cosmo.presentation.list.RemoteDevices
 
 object DummyContent {
-    fun getDevice() = Device(deviceId=0, macAddress="4921201e38d5", model="RIDE", product="RIDE", firmwareVersion="2.2.2", serial="BC892C9C-047D-8402-A9FD-7B2CC0048736", installationMode="helmet", brakeLight=false, lightMode="OFF", lightAuto=false, lightValue=0)
+    fun getDevice() = RemoteDevice(deviceId=0, macAddress="4921201e38d5", model="RIDE", product="RIDE", firmwareVersion="2.2.2", serial="BC892C9C-047D-8402-A9FD-7B2CC0048736", installationMode="helmet", brakeLight=false, lightMode="OFF", lightAuto=false, lightValue=0)
     fun getDevicesList(): RemoteDevices {
         return RemoteDevices(List(10) {
-            Device(
+            RemoteDevice(
                 deviceId = it,
                 macAddress = "MAC_$it",
                 model = "MODEL_$it",
@@ -43,8 +44,7 @@ object DummyContent {
         return features
     }
 
-    fun getBluetoothList(): List<BluetoothDevice> {
-        // TODO handle BluetoothDevice on a custom object because his constructor is protected
-        return listOf()
+    fun getBluetoothList(): List<CosmoListItemDevice> {
+        return listOf(CosmoListItemDevice("bt1", "00:00:00:00:11"), CosmoListItemDevice("bt2", "00:00:00:00:22"))
     }
 }
