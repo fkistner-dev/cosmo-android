@@ -99,7 +99,7 @@ class MainActivity : ComponentActivity() {
     }
 
     object ActivityHelper {
-        var selectedDevice: RemoteDevice? = null
+        var selectedDevice: CosmoDevice? = null
         var permissionsGranted: Boolean = false
     }
 }

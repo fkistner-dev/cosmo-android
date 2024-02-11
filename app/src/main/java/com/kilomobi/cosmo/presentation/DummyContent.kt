@@ -2,16 +2,16 @@ package com.kilomobi.cosmo.presentation
 
 import com.kilomobi.cosmo.R
 import com.kilomobi.cosmo.data.remote.RemoteDevice
+import com.kilomobi.cosmo.domain.model.CosmoDevice
 import com.kilomobi.cosmo.presentation.bluetooth.CosmoListItemDevice
 import com.kilomobi.cosmo.presentation.details.DeviceDetailIcon
 import com.kilomobi.cosmo.presentation.list.RemoteDevices
 
 object DummyContent {
-    fun getDevice() = RemoteDevice(deviceId=0, macAddress="4921201e38d5", model="RIDE", product="RIDE", firmwareVersion="2.2.2", serial="BC892C9C-047D-8402-A9FD-7B2CC0048736", installationMode="helmet", brakeLight=false, lightMode="OFF", lightAuto=false, lightValue=0)
+    fun getDevice() = CosmoDevice(macAddress="4921201e38d5", model="RIDE", product="RIDE", firmwareVersion="2.2.2", installationMode="helmet", brakeLight=false, lightMode="OFF", lightAuto=false, lightValue=0)
     fun getDevicesList(): RemoteDevices {
         return RemoteDevices(List(10) {
             RemoteDevice(
-                deviceId = it,
                 macAddress = "MAC_$it",
                 model = "MODEL_$it",
                 product = "PRODUCT_$it",

@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kilomobi.cosmo.data.di.IoDispatcher
-import com.kilomobi.cosmo.domain.usecase.GetDevicesUseCase
+import com.kilomobi.cosmo.domain.usecase.GetInitialDevicesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DevicesViewModel @Inject constructor(
-    private val getDevicesUseCase: GetDevicesUseCase,
+    private val getInitialDevicesUseCase: GetInitialDevicesUseCase,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private val _state = mutableStateOf(
@@ -42,7 +42,7 @@ class DevicesViewModel @Inject constructor(
 
     fun loadDevices() {
         viewModelScope.launch(errorHandler) {
-            val remoteList = getDevicesUseCase()
+            val remoteList = getInitialDevicesUseCase()
             _state.value = _state.value.copy(
                 devices = remoteList,
                 isLoading = false,

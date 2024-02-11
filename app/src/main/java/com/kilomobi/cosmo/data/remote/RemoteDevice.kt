@@ -3,7 +3,6 @@ package com.kilomobi.cosmo.data.remote
 import com.squareup.moshi.Json
 
 data class RemoteDevice(
-    val deviceId: Int = 0,
     @Json(name = "macAddress")
     val macAddress: String,
     @Json(name = "model")

@@ -1,6 +1,7 @@
 package com.kilomobi.cosmo
 
 import com.kilomobi.cosmo.data.DevicesRepository
+import com.kilomobi.cosmo.data.local.DeviceDao
 import com.kilomobi.cosmo.domain.usecase.GetDeviceFeaturesUseCase
 import com.kilomobi.cosmo.domain.usecase.GetDeviceImageUseCase
 import com.kilomobi.cosmo.presentation.DummyContent
@@ -19,6 +20,7 @@ class GetDeviceUseCaseTest {
     // Setup useCase
     private val devicesRepository = DevicesRepository(
         FakeApiService(),
+        FakeRoomDao(),
         dispatcher
     )
 

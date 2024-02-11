@@ -22,16 +22,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
 import com.kilomobi.cosmo.presentation.DummyContent
 import com.kilomobi.cosmo.R
-import com.kilomobi.cosmo.data.remote.RemoteDevice
+import com.kilomobi.cosmo.domain.model.CosmoDevice
 import com.kilomobi.cosmo.domain.usecase.GetDeviceFeaturesUseCase
 import com.kilomobi.cosmo.domain.usecase.GetDeviceImageUseCase
 import com.kilomobi.cosmo.presentation.theme.CosmoTheme
 
 @Composable
-fun DetailsDeviceScreen(device: RemoteDevice, onConnectClick: () -> Unit) {
+fun DetailsDeviceScreen(device: CosmoDevice, onConnectClick: () -> Unit) {
     val imageModifier = Modifier
         .fillMaxWidth()
         .height(150.dp)
@@ -43,7 +43,7 @@ fun DetailsDeviceScreen(device: RemoteDevice, onConnectClick: () -> Unit) {
             .background(colorResource(R.color.CosmoGrey))
     ) {
         Image(
-            painter = rememberImagePainter(data = GetDeviceImageUseCase().invoke(device.model)),
+            painter = rememberAsyncImagePainter(model = GetDeviceImageUseCase().invoke(device.model)),
             contentDescription = "image",
             modifier = imageModifier,
             contentScale = ContentScale.Fit

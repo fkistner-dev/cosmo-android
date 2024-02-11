@@ -96,7 +96,7 @@ dependencies {
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.navigation:navigation-runtime-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-runtime-ktx:2.7.7")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     ksp("androidx.room:room-compiler:2.6.1")
