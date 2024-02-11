@@ -14,6 +14,10 @@
     <string name="product_detail_bluetooth">Informations Bluetooth : </string>
     <string name="product_detail_bluetooth_hint">veuillez connecter un appareil pour afficher les informations</string>
     <string name="product_detail_bluetooth_connect">SE CONNECTER</string>
+    <string name="bluetooth_devices_list">Liste des appareils Bluetooth :</string>
+    <string name="bluetooth_no_devices">Aucun appareil bluetooth détecté</string>
+    <string name="bluetooth_scan_stop">Arrêter la recherche</string>
+    <string name="permission_bluetooth_text">Le Bluetooth est nécessaire pour chercher des appareils à proximité</string>
     <string name="common_permissions_denied">Veuillez accepter les permissions</string>
     <string name="common_ok">OK</string>
     <string name="common_retry">RECHARGER</string>
