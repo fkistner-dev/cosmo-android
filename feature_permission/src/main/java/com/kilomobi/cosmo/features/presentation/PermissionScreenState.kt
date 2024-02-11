@@ -1,3 +1,10 @@
 package com.kilomobi.cosmo.features.presentation
 
-data class PermissionScreenState()
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+
+data class PermissionScreenState(
+    val permission: PermissionState,
+    @StringRes val text: Int?,
+    @DrawableRes val image: Int?
+)

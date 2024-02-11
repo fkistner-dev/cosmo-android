@@ -6,15 +6,19 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.kilomobi.cosmo.R
-import com.kilomobi.cosmo.domain.usecase.GetPermissionsUseCase
+import com.kilomobi.cosmo.features.domain.usecase.GetPermissionsUseCase
 import com.kilomobi.cosmo.presentation.bluetooth.BluetoothScreen
 import com.kilomobi.cosmo.presentation.details.BluetoothViewModel
 import com.kilomobi.cosmo.presentation.details.DetailsDeviceScreen
-import com.kilomobi.cosmo.data.remote.RemoteDevice
+import com.kilomobi.cosmo.domain.model.CosmoDevice
+import com.kilomobi.cosmo.features.presentation.PermissionScreen
+import com.kilomobi.cosmo.features.presentation.PermissionViewModel
 import com.kilomobi.cosmo.presentation.list.DevicesScreen
 import com.kilomobi.cosmo.presentation.list.DevicesViewModel
 import com.kilomobi.cosmo.presentation.theme.CosmoTheme
@@ -32,21 +36,26 @@ class MainActivity : ComponentActivity() {
         const val DESTINATION_DEVICES_SCREEN = "destination_devices_screen"
         const val DESTINATION_DEVICE_DETAIL_SCREEN = "destination_device_detail_screen"
         const val DESTINATION_BLUETOOTH_SCREEN = "destination_bluetooth_screen"
+        const val DESTINATION_PERMISSION_SCREEN = "destination_permission_screen"
     }
+
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val permissions = GetPermissionsUseCase().invoke()
-        permissionLauncher.launch(permissions)
 
         setContent {
             CosmoTheme {
-                val navController = rememberNavController()
+                navController = rememberNavController()
                 val devicesViewModel: DevicesViewModel = hiltViewModel()
                 val bluetoothViewModel: BluetoothViewModel = hiltViewModel()
+                val permissionViewModel: PermissionViewModel = hiltViewModel()
+                val permissions = GetPermissionsUseCase().invoke()
+
+                checkPermissions(permissions)
 
                 NavHost(
-                    navController = navController,
+                    navController = navController as NavHostController,
                     startDestination = DESTINATION_DEVICES_SCREEN
                 ) {
                     composable(DESTINATION_DEVICES_SCREEN) {
@@ -64,8 +73,9 @@ class MainActivity : ComponentActivity() {
                         DetailsDeviceScreen(
                             device = ActivityHelper.selectedDevice!!,
                             onConnectClick = {
-                                if (ActivityHelper.permissionsGranted) navController.navigate(route = DESTINATION_BLUETOOTH_SCREEN)
-                                else permissionLauncher.launch(permissions)
+                                if (ActivityHelper.permissionsGranted) navController.navigate(route = DESTINATION_BLUETOOTH_SCREEN) else navController.navigate(
+                                    route = DESTINATION_PERMISSION_SCREEN
+                                )
                             }
                         )
                     }
@@ -74,6 +84,22 @@ class MainActivity : ComponentActivity() {
                             state = bluetoothViewModel.state.value,
                             onPermissionRequest = {
                                 bluetoothViewModel.startBluetoothScan()
+                            },
+                            onStopAction = {
+                                bluetoothViewModel.stopBluetoothScan()
+                            }
+                        )
+                    }
+                    composable(DESTINATION_PERMISSION_SCREEN) {
+                        permissionViewModel.setPermission(
+                            R.string.permission_bluetooth_text,
+                            R.drawable.baseline_bluetooth_searching_24
+                        )
+                        PermissionScreen(
+                            state = permissionViewModel.state.value,
+                            onPermissionRequest = {
+                                permissionLauncher.launch(permissions)
+                                true
                             }
                         )
                     }
@@ -82,7 +108,15 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    private fun handlePermissionsResult(permissions: Map<String, Boolean>) {
+    private fun checkPermissions(permissions: Array<String>): Boolean {
+        val hasPermissions = permissions.all {
+            this.checkSelfPermission(it) == android.content.pm.PackageManager.PERMISSION_GRANTED
+        }
+        ActivityHelper.permissionsGranted = hasPermissions
+        return hasPermissions
+    }
+
+    private fun handlePermissionsResult(permissions: Map<String, Boolean>, justVerify: Boolean = false) {
         var globalPermission = true
         for ((_, isGranted) in permissions) {
             if (!isGranted) {
@@ -90,12 +124,18 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        if (globalPermission) ActivityHelper.permissionsGranted = true
-        else Toast.makeText(
-            applicationContext,
-            applicationContext.getText(R.string.common_permissions_denied),
-            Toast.LENGTH_LONG
-        ).show()
+        ActivityHelper.permissionsGranted = globalPermission
+
+        if (!justVerify) {
+            if (globalPermission) {
+                navController.popBackStack()
+                navController.navigate(route = DESTINATION_BLUETOOTH_SCREEN)
+            } else Toast.makeText(
+                applicationContext,
+                applicationContext.getText(R.string.common_permissions_denied),
+                Toast.LENGTH_LONG
+            ).show()
+        }
     }
 
     object ActivityHelper {

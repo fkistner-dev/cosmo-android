@@ -1,22 +1,6 @@
 <resources>
     <string name="app_name">cosmo</string>
-    <string name="filter_title">Filtre</string>
-    <string name="filter_name">Puissance lumineuse</string>
-    <string name="product_list_title">Produits</string>
-    <string name="product_detail_features">Fonctionnalités</string>
-    <string name="product_detail_feature_brake_light">Emet une puissante lumière capable d\'aveugler votre poursuivant en mode offensif</string>
-    <string name="product_detail_feature_light_auto">Réalise des appels de phare automatiquement</string>
-    <string name="product_detail_feature_installation_mode">Mode d\'installation de votre produit Cosmo</string>
-    <string name="product_detail_model">Modèle : </string>
-    <string name="product_detail_product">Produit : </string>
-    <string name="product_detail_version">Version : </string>
-    <string name="product_detail_mac">MAC : </string>
-    <string name="product_detail_bluetooth">Informations Bluetooth : </string>
-    <string name="product_detail_bluetooth_hint">veuillez connecter un appareil pour afficher les informations</string>
-    <string name="product_detail_bluetooth_connect">SE CONNECTER</string>
-    <string name="bluetooth_timer_text">Recherche des appareils…</string>
-    <string name="bluetooth_no_devices">Aucun appareil bluetooth détecté</string>
     <string name="common_permissions_denied">Veuillez accepter les permissions</string>
     <string name="common_ok">OK</string>
-    <string name="common_retry">RECHARGER</string>
+    <string name="permission_bluetooth_text">Le Bluetooth est nécessaire pour chercher des appareils à proximité</string>
 </resources>

@@ -14,4 +14,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "cosmo"
-include(":app")
+include(":app", ":feature_permission")
