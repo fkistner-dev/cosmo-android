@@ -1,10 +1,9 @@
 package com.kilomobi.cosmo
 
 import com.kilomobi.cosmo.data.DevicesRepository
-import com.kilomobi.cosmo.data.local.DeviceDao
 import com.kilomobi.cosmo.domain.usecase.GetDeviceFeaturesUseCase
 import com.kilomobi.cosmo.domain.usecase.GetDeviceImageUseCase
-import com.kilomobi.cosmo.presentation.DummyContent
+import com.kilomobi.cosmo.presentation.MockContent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -31,8 +30,8 @@ class GetDeviceUseCaseTest {
         advanceUntilIdle()
 
         // Execute useCase
-        val features = DummyContent.getFeatures()
-        val featuresReceived = useCase(DummyContent.getDevice())
+        val features = MockContent.getFeatures()
+        val featuresReceived = useCase(MockContent.getDevice())
         advanceUntilIdle()
 
         // Assertion

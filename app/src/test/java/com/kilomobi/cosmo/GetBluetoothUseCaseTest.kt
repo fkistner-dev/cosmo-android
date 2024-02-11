@@ -2,7 +2,7 @@ package com.kilomobi.cosmo
 
 import com.kilomobi.cosmo.data.BluetoothRepositoryImpl
 import com.kilomobi.cosmo.domain.usecase.StartBluetoothScanUseCase
-import com.kilomobi.cosmo.presentation.DummyContent
+import com.kilomobi.cosmo.presentation.MockContent
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestScope
@@ -26,7 +26,7 @@ class GetBluetoothUseCaseTest {
         advanceUntilIdle()
 
         // Execute useCase
-        val btDevices = DummyContent.getBluetoothList()
+        val btDevices = MockContent.getBluetoothList()
         val btDevicesReceived = useCase()
         advanceUntilIdle()
 
