@@ -3,9 +3,7 @@ Cosmo is an Android application developed using Kotlin and Android Studio Hedgeh
 The app is written in Kotlin, with Jetpack Compose. It retrieves data from Cosmo.
 Handle error on network call, and provide a handy maneer for retry.
 
-⚠️ warning : permissions are not designed to be refused.
-
-![app](https://s13.gifyu.com/images/SCuup.gif)
+<img src="/cosmo-demo.gif?raw=true" width="360" title="cosmo-demo" alt="gif">
 
 ## Getting Started
 To get started with the Cosmo App, follow these steps:
